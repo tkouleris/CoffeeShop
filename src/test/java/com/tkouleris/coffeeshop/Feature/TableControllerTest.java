@@ -2,7 +2,7 @@ package com.tkouleris.coffeeshop.Feature;
 
 import com.google.gson.Gson;
 import com.tkouleris.coffeeshop.model.Tables;
-import com.tkouleris.coffeeshop.repository.TablesRepository;
+import com.tkouleris.coffeeshop.repository.TableRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,7 +24,7 @@ public class TableControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    TablesRepository tablesRepository;
+    TableRepository tablesRepository;
 
     @Test
     public void creatingNewTable() throws Exception {

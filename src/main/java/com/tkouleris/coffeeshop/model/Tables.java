@@ -4,12 +4,14 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@Table(name = "client_table")
 public class Tables {
     @Id
     @GeneratedValue
     private long id;
 
-    private String table_code;
+    @Column(name="table_code")
+    private String tableCode;
 
     private boolean active;
 
@@ -26,11 +28,11 @@ public class Tables {
     }
 
     public String getTable_code() {
-        return table_code;
+        return tableCode;
     }
 
-    public void setTable_code(String table_code) {
-        this.table_code = table_code;
+    public void setTable_code(String tableCode) {
+        this.tableCode = tableCode;
     }
 
     public boolean isActive() {
