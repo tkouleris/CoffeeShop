@@ -28,7 +28,7 @@ public class TableService {
         {
             throw new Exception("Table ID not set!");
         }
-        
+
         Tables recordToUpdate = tablesRepository.findById(table.getId()).orElse(null);
         if(tableRecordNotExists(recordToUpdate))
         {
