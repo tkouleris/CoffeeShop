@@ -19,8 +19,7 @@ public class TableController {
 
     protected TableService tableService;
 
-    public TableController(TableService tableService)
-    {
+    public TableController(TableService tableService) {
         this.tableService = tableService;
     }
 
@@ -30,7 +29,7 @@ public class TableController {
         return new ResponseEntity<>(savedTable, HttpStatus.OK);
     }
 
-    @PutMapping(path="/update", produces = "application/json")
+    @PutMapping(path = "/update", produces = "application/json")
     public ResponseEntity<Object> updateTable(@Valid @RequestBody Tables table) throws Exception {
         Tables updatedTable = tableService.updateTable(table);
         return new ResponseEntity<>(updatedTable, HttpStatus.OK);
