@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface TableRepository extends CrudRepository<Tables, Long> {
 
     Optional<Tables> findByTableCode(String tableCode);
+
 }

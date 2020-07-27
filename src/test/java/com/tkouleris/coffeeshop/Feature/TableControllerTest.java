@@ -3,6 +3,7 @@ package com.tkouleris.coffeeshop.Feature;
 import com.google.gson.Gson;
 import com.tkouleris.coffeeshop.model.Tables;
 import com.tkouleris.coffeeshop.repository.TableRepository;
+import com.tkouleris.coffeeshop.service.TableService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,6 +26,8 @@ public class TableControllerTest {
 
     @MockBean
     TableRepository tablesRepository;
+    @MockBean
+    TableService tableService;
 
     @Test
     public void creatingNewTable() throws Exception {
@@ -34,7 +37,7 @@ public class TableControllerTest {
         Gson gson = new Gson();
         String json = gson.toJson(request);
 
-        Mockito.when(tablesRepository.save(request)).thenReturn(request);
+        Mockito.when(tableService.createTable(request)).thenReturn(request);
 
         MvcResult response = mockMvc
                 .perform(
