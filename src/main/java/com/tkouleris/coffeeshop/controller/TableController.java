@@ -6,10 +6,7 @@ import com.tkouleris.coffeeshop.service.TableService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -26,12 +23,18 @@ public class TableController {
     @PostMapping(path = "/create", produces = "application/json")
     public ResponseEntity<Object> createTable(@RequestBody Tables table) throws Exception {
         Tables savedTable = tableService.createTable(table);
-        return new ResponseEntity<>(savedTable, HttpStatus.OK);
+        return new ResponseEntity<>(savedTable, HttpStatus.CREATED);
     }
 
     @PutMapping(path = "/update", produces = "application/json")
     public ResponseEntity<Object> updateTable(@Valid @RequestBody Tables table) throws Exception {
         Tables updatedTable = tableService.updateTable(table);
         return new ResponseEntity<>(updatedTable, HttpStatus.OK);
+    }
+
+    @DeleteMapping(path = "delete/{table_id}", produces = "application/json")
+    public ResponseEntity<Object> deleteTable(@PathVariable("table_id") long table_id) throws Exception {
+        tableService.deleteTable(table_id);
+        return new ResponseEntity<>(null,HttpStatus.OK);
     }
 }
