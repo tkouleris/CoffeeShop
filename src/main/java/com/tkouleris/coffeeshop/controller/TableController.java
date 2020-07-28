@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("/api/tables")
@@ -17,6 +18,12 @@ public class TableController {
 
     public TableController(TableService tableService) {
         this.tableService = tableService;
+    }
+
+    @GetMapping(path = "/all", produces = "application/json")
+    public ResponseEntity<Object> all(){
+        List<Tables> tables = tableService.findAll();
+        return new ResponseEntity<>(tables,HttpStatus.OK);
     }
 
     @PostMapping(path = "/create", produces = "application/json")

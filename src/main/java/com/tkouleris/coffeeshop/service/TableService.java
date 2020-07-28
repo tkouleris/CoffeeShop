@@ -4,7 +4,10 @@ import com.tkouleris.coffeeshop.model.Tables;
 import com.tkouleris.coffeeshop.repository.TableRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class TableService {
@@ -63,5 +66,10 @@ public class TableService {
     private boolean tableCodeDoesNotBelongToTheUpdatedTable(Tables table) {
         Tables updatedTable = tablesRepository.findByTableCode(table.getTable_code()).orElse(null);
         return Objects.requireNonNull(updatedTable).getId() != table.getId();
+    }
+
+    public List<Tables> findAll() {
+        return StreamSupport.stream(tablesRepository.findAll().spliterator(), false)
+                .collect(Collectors.toList());
     }
 }
