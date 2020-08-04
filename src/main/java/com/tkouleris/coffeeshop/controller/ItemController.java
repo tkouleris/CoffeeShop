@@ -1,7 +1,6 @@
 package com.tkouleris.coffeeshop.controller;
 
 import com.tkouleris.coffeeshop.model.Item;
-import com.tkouleris.coffeeshop.model.Tables;
 import com.tkouleris.coffeeshop.service.ItemService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
