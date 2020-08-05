@@ -30,7 +30,7 @@ public class ItemService {
             throw new Exception("Item does not exist");
         }
 
-        if (itemExists(item.getItem())) {
+        if (itemExists(item.getItem()) && isNotCurrentItem(item, recordToUpdate)) {
             throw new Exception("Item " + item.getItem() + " already exists");
         }
 
@@ -39,6 +39,10 @@ public class ItemService {
         recordToUpdate.setPrice(item.getPrice());
 
         return itemRepository.save(recordToUpdate);
+    }
+
+    private boolean isNotCurrentItem(Item item, Item recordToUpdate) {
+        return !recordToUpdate.getItem().equals(item.getItem());
     }
 
     private boolean itemRecordNotExists(Item recordToUpdate) {
