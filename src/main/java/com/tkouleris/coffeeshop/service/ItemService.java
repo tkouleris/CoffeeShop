@@ -1,7 +1,6 @@
 package com.tkouleris.coffeeshop.service;
 
 import com.tkouleris.coffeeshop.model.Item;
-import com.tkouleris.coffeeshop.model.Tables;
 import com.tkouleris.coffeeshop.repository.ItemRepository;
 import org.springframework.stereotype.Service;
 
