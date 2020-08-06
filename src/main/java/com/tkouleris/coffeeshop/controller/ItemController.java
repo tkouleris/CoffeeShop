@@ -5,10 +5,7 @@ import com.tkouleris.coffeeshop.service.ItemService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/api/item")
@@ -31,4 +28,11 @@ public class ItemController {
         Item updatedItem = itemService.updateItem(item);
         return new ResponseEntity<>(updatedItem,HttpStatus.OK);
     }
+
+    @DeleteMapping(path ="/delete/{item_id}", produces = "application/json")
+    public ResponseEntity<Object> deleteItem(@PathVariable("item_id") long item_id) throws Exception {
+        itemService.delete(item_id);
+        return new ResponseEntity<>(null,HttpStatus.OK);
+    }
+
 }

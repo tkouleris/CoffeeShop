@@ -47,8 +47,7 @@ public class TableService {
 
     public void deleteTable(long table_id) throws Exception {
         Tables tableToDelete = tablesRepository.findById(table_id).orElse(null);
-        if(tableRecordNotExists(tableToDelete))
-        {
+        if (tableRecordNotExists(tableToDelete)) {
             throw new Exception("Table does not exist!");
         }
 

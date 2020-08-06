@@ -33,11 +33,20 @@ public class ItemService {
             throw new Exception("Item " + item.getItem() + " already exists");
         }
 
-        if(item.getItem() != null) recordToUpdate.setItem(item.getItem());
+        if (item.getItem() != null) recordToUpdate.setItem(item.getItem());
         recordToUpdate.setActive(item.isActive());
         recordToUpdate.setPrice(item.getPrice());
 
         return itemRepository.save(recordToUpdate);
+    }
+
+    public void delete(long item_id) throws Exception {
+        Item itemToDelete = itemRepository.findById(item_id).orElse(null);
+        if (itemRecordNotExists(itemToDelete)) {
+            throw new Exception("Item does not exist!");
+        }
+
+        itemRepository.delete(itemToDelete);
     }
 
     private boolean isNotCurrentItem(Item item, Item recordToUpdate) {
@@ -49,7 +58,8 @@ public class ItemService {
     }
 
     private boolean itemExists(String itemCode) {
-        return  itemRepository.findFirstByItem(itemCode).orElse(null) != null;
+        return itemRepository.findFirstByItem(itemCode).orElse(null) != null;
     }
+
 
 }
