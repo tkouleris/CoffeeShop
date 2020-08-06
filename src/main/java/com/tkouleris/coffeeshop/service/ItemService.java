@@ -1,5 +1,8 @@
 package com.tkouleris.coffeeshop.service;
 
+import com.tkouleris.coffeeshop.exception.item.ItemCreationException;
+import com.tkouleris.coffeeshop.exception.item.ItemNotFoundException;
+import com.tkouleris.coffeeshop.exception.item.ItemUpdateException;
 import com.tkouleris.coffeeshop.model.Item;
 import com.tkouleris.coffeeshop.repository.ItemRepository;
 import org.springframework.stereotype.Service;
@@ -14,23 +17,23 @@ public class ItemService {
 
     public Item createItem(Item item) throws Exception {
         if (itemExists(item.getItem())) {
-            throw new Exception("Item " + item.getItem() + " already exists");
+            throw new ItemCreationException("Item " + item.getItem() + " already exists");
         }
         return itemRepository.save(item);
     }
 
     public Item updateItem(Item item) throws Exception {
         if (item.getId() == 0) {
-            throw new Exception("Item ID not set!");
+            throw new IllegalArgumentException("Item ID not set!");
         }
 
         Item recordToUpdate = itemRepository.findById(item.getId()).orElse(null);
         if (itemRecordNotExists(recordToUpdate)) {
-            throw new Exception("Item does not exist");
+            throw new ItemNotFoundException("Item does not exist");
         }
 
         if (itemExists(item.getItem()) && isNotCurrentItem(item, recordToUpdate)) {
-            throw new Exception("Item " + item.getItem() + " already exists");
+            throw new ItemUpdateException("Item " + item.getItem() + " already exists");
         }
 
         if (item.getItem() != null) recordToUpdate.setItem(item.getItem());
@@ -43,7 +46,7 @@ public class ItemService {
     public void delete(long item_id) throws Exception {
         Item itemToDelete = itemRepository.findById(item_id).orElse(null);
         if (itemRecordNotExists(itemToDelete)) {
-            throw new Exception("Item does not exist!");
+            throw new ItemNotFoundException("Item does not exist!");
         }
 
         itemRepository.delete(itemToDelete);
