@@ -18,6 +18,11 @@ public class TableService {
         this.tablesRepository = tablesRepository;
     }
 
+    public List<Tables> findAll() {
+        return StreamSupport.stream(tablesRepository.findAll().spliterator(), false)
+                .collect(Collectors.toList());
+    }
+
     public Tables createTable(Tables table) throws Exception {
         if (tableCodeExists(table.getTable_code())) {
             throw new Exception("Table " + table.getTable_code() + " already exists");
@@ -67,8 +72,4 @@ public class TableService {
         return Objects.requireNonNull(updatedTable).getId() != table.getId();
     }
 
-    public List<Tables> findAll() {
-        return StreamSupport.stream(tablesRepository.findAll().spliterator(), false)
-                .collect(Collectors.toList());
-    }
 }

@@ -7,12 +7,21 @@ import com.tkouleris.coffeeshop.model.Item;
 import com.tkouleris.coffeeshop.repository.ItemRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 @Service
 public class ItemService {
     ItemRepository itemRepository;
 
     public ItemService(ItemRepository itemRepository) {
         this.itemRepository = itemRepository;
+    }
+
+    public List<Item> findAll() {
+        return StreamSupport.stream(itemRepository.findAll().spliterator(), false)
+                .collect(Collectors.toList());
     }
 
     public Item createItem(Item item) throws Exception {
@@ -63,6 +72,5 @@ public class ItemService {
     private boolean itemExists(String itemCode) {
         return itemRepository.findFirstByItem(itemCode).orElse(null) != null;
     }
-
 
 }

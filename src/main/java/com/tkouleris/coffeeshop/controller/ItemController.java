@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/api/item")
 public class ItemController {
@@ -15,6 +17,12 @@ public class ItemController {
 
     public ItemController(ItemService itemService) {
         this.itemService = itemService;
+    }
+
+    @GetMapping(path = "/all", produces = "application/json")
+    public ResponseEntity<Object> all(){
+        List<Item> items = itemService.findAll();
+        return new ResponseEntity<>(items,HttpStatus.OK);
     }
 
     @PostMapping(path = "/create", produces = "application/json")
