@@ -2,12 +2,10 @@ package com.tkouleris.coffeeshop.controller;
 
 import com.tkouleris.coffeeshop.dto.OrderRequest;
 import com.tkouleris.coffeeshop.dto.OrdersRequest;
-import com.tkouleris.coffeeshop.dto.OrdersResponse;
 import com.tkouleris.coffeeshop.model.Item;
 import com.tkouleris.coffeeshop.model.Orders;
 import com.tkouleris.coffeeshop.model.Tables;
 import com.tkouleris.coffeeshop.repository.ItemRepository;
-import com.tkouleris.coffeeshop.repository.OrdersRepository;
 import com.tkouleris.coffeeshop.repository.TableRepository;
 import com.tkouleris.coffeeshop.service.OrderService;
 import org.springframework.http.HttpStatus;
