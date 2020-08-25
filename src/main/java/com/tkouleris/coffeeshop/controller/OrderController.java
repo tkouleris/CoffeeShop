@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,26 +30,23 @@ public class OrderController {
 
     private final OrderService orderService;
 
-    public OrderController(TableRepository tableRepository, ItemRepository itemRepository, OrderService orderService)
-    {
+    public OrderController(TableRepository tableRepository, ItemRepository itemRepository, OrderService orderService) {
         this.tableRepository = tableRepository;
         this.itemRepository = itemRepository;
         this.orderService = orderService;
     }
 
-    @PostMapping( path = "/create", produces = "application/json")
-    public ResponseEntity<Object> create(@RequestBody OrdersRequest orders)
-    {
+    @PostMapping(path = "/create", produces = "application/json")
+    public ResponseEntity<Object> create(@RequestBody OrdersRequest orders) {
         List<Orders> orderList = new ArrayList<>();
-        for (OrderRequest order: orders.orders) {
+        for (OrderRequest order : orders.orders) {
             orderList.add(convertToEntity(order));
         }
         List<Orders> createdOrders = orderService.create(orderList);
         return new ResponseEntity<>(createdOrders, HttpStatus.CREATED);
     }
 
-    private Orders convertToEntity(OrderRequest orderRequest)
-    {
+    private Orders convertToEntity(OrderRequest orderRequest) {
         Orders newOrder = new Orders();
         newOrder.setDate(LocalDate.now());
         newOrder.setDelivered(false);
