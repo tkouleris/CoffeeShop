@@ -8,10 +8,7 @@ import com.tkouleris.coffeeshop.service.OrderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,5 +43,11 @@ public class OrderController {
         }
         List<Orders> updateOrders = orderService.update(orderList);
         return new ResponseEntity<>(updateOrders, HttpStatus.OK);
+    }
+
+    @DeleteMapping(path = "/delete/{order_id}", produces = "application/json")
+    public ResponseEntity<Object> delete(@PathVariable("order_id") long order_id) throws Exception {
+        orderService.delete(order_id);
+        return new ResponseEntity<>(null,HttpStatus.OK);
     }
 }

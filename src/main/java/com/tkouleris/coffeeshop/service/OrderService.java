@@ -39,4 +39,13 @@ public class OrderService {
         }
         return updatedOrders;
     }
+
+    public void delete(long order_id) throws Exception {
+        Orders orderToDelete = ordersRepository.findById(order_id).orElse(null);
+        if(orderToDelete == null)
+        {
+            throw new Exception("Order does not exist");
+        }
+        ordersRepository.delete(orderToDelete);
+    }
 }
