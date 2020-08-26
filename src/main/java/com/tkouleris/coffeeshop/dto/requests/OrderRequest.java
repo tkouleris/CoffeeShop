@@ -1,13 +1,22 @@
-package com.tkouleris.coffeeshop.dto;
+package com.tkouleris.coffeeshop.dto.requests;
 
 import java.time.LocalDate;
 
 public class OrderRequest{
+    private long id;
     private long item_id;
     private long table_id;
     private LocalDate date;
     private boolean delivered;
     private boolean payed;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public long getItem_id() {
         return item_id;

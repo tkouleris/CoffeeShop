@@ -25,4 +25,18 @@ public class OrderService {
         return createdOrders;
     }
 
+    public List<Orders> update(List<Orders> orders) {
+        List<Orders> updatedOrders = new ArrayList<>();
+        for (Orders order : orders) {
+            Orders entityToUpdate = ordersRepository.findById(order.getId()).orElse(null);
+            if(entityToUpdate == null) continue;
+            entityToUpdate.setItem(order.getItem());
+            entityToUpdate.setTable(order.getTable());
+            entityToUpdate.setPayed(order.isPayed());
+            entityToUpdate.setDelivered(order.isDelivered());
+            Orders updatedOrder = ordersRepository.save(entityToUpdate);
+            updatedOrders.add(updatedOrder);
+        }
+        return updatedOrders;
+    }
 }

@@ -1,4 +1,4 @@
-package com.tkouleris.coffeeshop.dto;
+package com.tkouleris.coffeeshop.dto.responses;
 
 import com.tkouleris.coffeeshop.model.Orders;
 
