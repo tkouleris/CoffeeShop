@@ -2,7 +2,7 @@ package com.tkouleris.coffeeshop.dto.requests;
 
 import java.time.LocalDate;
 
-public class OrderRequest{
+public class OrderRequest {
     private long id;
     private long item_id;
     private long table_id;

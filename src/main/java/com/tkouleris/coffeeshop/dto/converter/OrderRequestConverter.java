@@ -16,14 +16,12 @@ public class OrderRequestConverter {
     private final TableRepository tableRepository;
     private final ItemRepository itemRepository;
 
-    public OrderRequestConverter(TableRepository tableRepository, ItemRepository itemRepository)
-    {
+    public OrderRequestConverter(TableRepository tableRepository, ItemRepository itemRepository) {
         this.tableRepository = tableRepository;
         this.itemRepository = itemRepository;
     }
 
-    public Orders convertToEntity(OrderRequest orderRequest)
-    {
+    public Orders convertToEntity(OrderRequest orderRequest) {
         Orders newOrder = new Orders();
         newOrder.setId(orderRequest.getId());
         newOrder.setDate(LocalDate.now());
