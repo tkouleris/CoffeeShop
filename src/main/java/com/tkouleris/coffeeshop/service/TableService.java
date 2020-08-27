@@ -2,6 +2,10 @@ package com.tkouleris.coffeeshop.service;
 
 import com.tkouleris.coffeeshop.model.Tables;
 import com.tkouleris.coffeeshop.repository.TableRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,9 +22,10 @@ public class TableService {
         this.tablesRepository = tablesRepository;
     }
 
-    public List<Tables> findAll() {
-        return StreamSupport.stream(tablesRepository.findAll().spliterator(), false)
-                .collect(Collectors.toList());
+    public List<Tables> findAll(Integer pageNo, Integer pageSize, String sortBy) {
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+        Page<Tables> pageResult = tablesRepository.findAll(paging);
+        return pageResult.getContent();
     }
 
     public Tables createTable(Tables table) throws Exception {

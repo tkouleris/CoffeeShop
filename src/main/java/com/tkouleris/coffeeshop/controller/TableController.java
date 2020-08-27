@@ -21,8 +21,10 @@ public class TableController {
     }
 
     @GetMapping(path = "/all", produces = "application/json")
-    public ResponseEntity<Object> all(){
-        List<Tables> tables = tableService.findAll();
+    public ResponseEntity<Object> all(@RequestParam(defaultValue = "0") Integer pageNo,
+                                      @RequestParam(defaultValue = "5") Integer pageSize,
+                                      @RequestParam(defaultValue = "id") String sortBy){
+        List<Tables> tables = tableService.findAll(pageNo, pageSize, sortBy);
         return new ResponseEntity<>(tables,HttpStatus.OK);
     }
 
