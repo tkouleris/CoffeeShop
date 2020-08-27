@@ -5,11 +5,13 @@ import com.tkouleris.coffeeshop.exception.item.ItemNotFoundException;
 import com.tkouleris.coffeeshop.exception.item.ItemUpdateException;
 import com.tkouleris.coffeeshop.model.Item;
 import com.tkouleris.coffeeshop.repository.ItemRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Service
 public class ItemService {
@@ -19,9 +21,10 @@ public class ItemService {
         this.itemRepository = itemRepository;
     }
 
-    public List<Item> findAll() {
-        return StreamSupport.stream(itemRepository.findAll().spliterator(), false)
-                .collect(Collectors.toList());
+    public List<Item> findAll(Integer pageNo, Integer pageSize, String sortBy) {
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+        Page<Item> pagedResult = itemRepository.findAll(paging);
+        return pagedResult.getContent();
     }
 
     public Item createItem(Item item) throws Exception {

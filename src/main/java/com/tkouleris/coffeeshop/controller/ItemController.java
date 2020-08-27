@@ -20,8 +20,10 @@ public class ItemController {
     }
 
     @GetMapping(path = "/all", produces = "application/json")
-    public ResponseEntity<Object> all(){
-        List<Item> items = itemService.findAll();
+    public ResponseEntity<Object> all(@RequestParam(defaultValue = "0") Integer pageNo,
+                                      @RequestParam(defaultValue = "5") Integer pageSize,
+                                      @RequestParam(defaultValue = "id") String sortBy) {
+        List<Item> items = itemService.findAll(pageNo, pageSize, sortBy);
         return new ResponseEntity<>(items,HttpStatus.OK);
     }
 
