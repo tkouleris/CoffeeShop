@@ -23,9 +23,9 @@ public class TableController {
     @GetMapping(path = "/all", produces = "application/json")
     public ResponseEntity<Object> all(@RequestParam(defaultValue = "0") Integer pageNo,
                                       @RequestParam(defaultValue = "5") Integer pageSize,
-                                      @RequestParam(defaultValue = "id") String sortBy){
+                                      @RequestParam(defaultValue = "id") String sortBy) {
         List<Tables> tables = tableService.findAll(pageNo, pageSize, sortBy);
-        return new ResponseEntity<>(tables,HttpStatus.OK);
+        return new ResponseEntity<>(tables, HttpStatus.OK);
     }
 
     @PostMapping(path = "/create", produces = "application/json")
@@ -43,6 +43,6 @@ public class TableController {
     @DeleteMapping(path = "delete/{table_id}", produces = "application/json")
     public ResponseEntity<Object> deleteTable(@PathVariable("table_id") long table_id) throws Exception {
         tableService.deleteTable(table_id);
-        return new ResponseEntity<>(null,HttpStatus.OK);
+        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 }
