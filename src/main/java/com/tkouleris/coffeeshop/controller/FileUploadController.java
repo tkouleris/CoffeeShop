@@ -1,6 +1,7 @@
 package com.tkouleris.coffeeshop.controller;
 
 import com.tkouleris.coffeeshop.exception.item.ItemNotFoundException;
+import com.tkouleris.coffeeshop.facade.FileUploader;
 import com.tkouleris.coffeeshop.model.Item;
 import com.tkouleris.coffeeshop.service.ItemService;
 import com.tkouleris.coffeeshop.service.UploadFileService;
@@ -18,24 +19,16 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/api/upload")
 public class FileUploadController {
 
-    private final UploadFileService uploadFileService;
-    private final ItemService itemService;
+    private final FileUploader fileUploader;
 
-    public FileUploadController(UploadFileService uploadFileService, ItemService itemService) {
-        this.uploadFileService = uploadFileService;
-        this.itemService = itemService;
+    public FileUploadController(FileUploader fileUploader) {
+        this.fileUploader = fileUploader;
     }
 
     @PostMapping(value = "/item", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Object> handleItemImageUpload(@RequestParam("file") MultipartFile file,
                                                         @RequestParam("item_id") long item_id) throws Exception {
-        Item item = itemService.getitem(item_id);
-        if (item == null) {
-            throw new ItemNotFoundException("Item not found!");
-        }
-        uploadFileService.uploadFile(file);
-        item.setImage_name(file.getOriginalFilename());
-        itemService.updateItem(item);
+        fileUploader.ItemImageUpload(file,item_id);
         return new ResponseEntity<>("File uploaded", HttpStatus.OK);
     }
 
