@@ -55,8 +55,7 @@ public class ItemService {
         return itemRepository.save(recordToUpdate);
     }
 
-    public Item getitem(long item_id)
-    {
+    public Item getitem(long item_id) {
         return itemRepository.findById(item_id).orElse(null);
     }
 

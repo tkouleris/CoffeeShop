@@ -27,11 +27,10 @@ public class FileUploadController {
     }
 
     @PostMapping(value = "/item", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Object> handleItemImageUpload( @RequestParam("file") MultipartFile file,
-                                                         @RequestParam("item_id") long item_id) throws Exception {
+    public ResponseEntity<Object> handleItemImageUpload(@RequestParam("file") MultipartFile file,
+                                                        @RequestParam("item_id") long item_id) throws Exception {
         Item item = itemService.getitem(item_id);
-        if( item == null)
-        {
+        if (item == null) {
             throw new ItemNotFoundException("Item not found!");
         }
         uploadFileService.uploadFile(file);

@@ -29,8 +29,8 @@ public class ItemController {
                                       HttpServletRequest request) {
         List<Item> items = itemService.findAll(pageNo, pageSize, sortBy);
         String baseUrl = HttpUtils.getBaseUrl(request);
-        itemService.setImagesUrl(items,baseUrl);
-        return new ResponseEntity<>(items,HttpStatus.OK);
+        itemService.setImagesUrl(items, baseUrl);
+        return new ResponseEntity<>(items, HttpStatus.OK);
     }
 
     @PostMapping(path = "/create", produces = "application/json")
@@ -42,13 +42,13 @@ public class ItemController {
     @PutMapping(path = "/update", produces = "application/json")
     public ResponseEntity<Object> updateItem(@RequestBody Item item) throws Exception {
         Item updatedItem = itemService.updateItem(item);
-        return new ResponseEntity<>(updatedItem,HttpStatus.OK);
+        return new ResponseEntity<>(updatedItem, HttpStatus.OK);
     }
 
-    @DeleteMapping(path ="/delete/{item_id}", produces = "application/json")
+    @DeleteMapping(path = "/delete/{item_id}", produces = "application/json")
     public ResponseEntity<Object> deleteItem(@PathVariable("item_id") long item_id) throws Exception {
         itemService.delete(item_id);
-        return new ResponseEntity<>(null,HttpStatus.OK);
+        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
 }
