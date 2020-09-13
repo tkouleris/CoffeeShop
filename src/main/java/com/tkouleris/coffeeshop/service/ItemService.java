@@ -55,6 +55,11 @@ public class ItemService {
         return itemRepository.save(recordToUpdate);
     }
 
+    public Item getitem(long item_id)
+    {
+        return itemRepository.findById(item_id).orElse(null);
+    }
+
     public void delete(long item_id) throws Exception {
         Item itemToDelete = itemRepository.findById(item_id).orElse(null);
         if (itemRecordNotExists(itemToDelete)) {
@@ -64,19 +69,15 @@ public class ItemService {
         itemRepository.delete(itemToDelete);
     }
 
-    public void setImagesUrl(List<Item> items, String baseUrl)
-    {
-        for(Item item: items)
-        {
+    public void setImagesUrl(List<Item> items, String baseUrl) {
+        for (Item item : items) {
             setImageUrl(item, baseUrl);
         }
     }
 
-    public void setImageUrl(Item item, String baseUrl)
-    {
+    public void setImageUrl(Item item, String baseUrl) {
         item.image_url = null;
-        if(item.getImage_name() != null)
-        {
+        if (item.getImage_name() != null) {
             item.image_url = item.getImageURL(baseUrl);
         }
     }

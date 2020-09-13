@@ -12,23 +12,20 @@ import java.util.Objects;
 public class UploadFileService {
 
     public void uploadFile(MultipartFile file) throws IOException {
-        File convertFile = new File(getUploadFolderAbsolutePath() + file.getOriginalFilename());
-        if(!convertFile.createNewFile())
-        {
-            throw new IOException("Cannot create File");
-        }
-        saveFile(file, convertFile);
-    }
-
-    private void saveFile(MultipartFile file, File convertFile) throws IOException {
-        FileOutputStream fout = new FileOutputStream(convertFile);
-        fout.write(file.getBytes());
-        fout.close();
+        File uploadedFile = new File(getUploadFolderAbsolutePath() + file.getOriginalFilename());
+        boolean success = uploadedFile.createNewFile();
+        saveFile(file, uploadedFile);
     }
 
     private String getUploadFolderAbsolutePath() {
         ClassLoader classLoader = getClass().getClassLoader();
         File nullFile = new File(Objects.requireNonNull(classLoader.getResource("")).getFile());
         return nullFile.getAbsolutePath() + "/static/upload/";
+    }
+
+    private void saveFile(MultipartFile file, File uploadedFile) throws IOException {
+        FileOutputStream fout = new FileOutputStream(uploadedFile);
+        fout.write(file.getBytes());
+        fout.close();
     }
 }
