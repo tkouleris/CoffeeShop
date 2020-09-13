@@ -64,6 +64,23 @@ public class ItemService {
         itemRepository.delete(itemToDelete);
     }
 
+    public void setImagesUrl(List<Item> items, String baseUrl)
+    {
+        for(Item item: items)
+        {
+            setImageUrl(item, baseUrl);
+        }
+    }
+
+    public void setImageUrl(Item item, String baseUrl)
+    {
+        item.image_url = null;
+        if(item.getImage_name() != null)
+        {
+            item.image_url = item.getImageURL(baseUrl);
+        }
+    }
+
     private boolean isNotCurrentItem(Item item, Item recordToUpdate) {
         return !recordToUpdate.getItem().equals(item.getItem());
     }
@@ -75,5 +92,6 @@ public class ItemService {
     private boolean itemExists(String itemCode) {
         return itemRepository.findFirstByItem(itemCode).orElse(null) != null;
     }
+
 
 }

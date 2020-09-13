@@ -19,6 +19,11 @@ public class Item {
     @JoinColumn(name = "item_id")
     List<Orders> order;
 
+    private String image_name;
+
+    @javax.persistence.Transient
+    public String image_url;
+
     public long getId() {
         return id;
     }
@@ -49,5 +54,18 @@ public class Item {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public String getImage_name() {
+        return image_name;
+    }
+
+    public void setImage_name(String image_name) {
+        this.image_name = image_name;
+    }
+
+    public String getImageURL(String baseURL)
+    {
+        return baseURL + "/upload/" + getImage_name();
     }
 }
