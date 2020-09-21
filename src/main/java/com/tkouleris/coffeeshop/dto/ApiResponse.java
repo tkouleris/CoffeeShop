@@ -1,32 +1,19 @@
 package com.tkouleris.coffeeshop.dto;
 
-import org.springframework.stereotype.Component;
-
-import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-@Component
 public class ApiResponse {
 
     private final Map<String, Object> body = new LinkedHashMap<>();
 
-    public ApiResponse() {
-        body.put("timestamp", null);
-        body.put("message", null);
-        body.put("data", null);
-    }
-
-    public void setMessage(String message) {
+    public ApiResponse(boolean success, String message, Object data) {
+        body.put("success", success);
         body.put("message", message);
-    }
-
-    public void setData(Object data) {
         body.put("data", data);
     }
 
     public Map<String, Object> getBodyResponse() {
-        body.put("timestamp", LocalDateTime.now());
         return body;
     }
 }

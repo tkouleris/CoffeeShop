@@ -1,5 +1,6 @@
 package com.tkouleris.coffeeshop.controller;
 
+import com.tkouleris.coffeeshop.dto.ApiResponse;
 import com.tkouleris.coffeeshop.model.Item;
 import com.tkouleris.coffeeshop.service.ItemService;
 import com.tkouleris.coffeeshop.utils.HttpUtils;
@@ -29,31 +30,36 @@ public class ItemController {
         List<Item> items = itemService.findAll(pageNo, pageSize, sortBy);
         String baseUrl = HttpUtils.getBaseUrl(request);
         itemService.setImagesUrl(items, baseUrl);
-        return new ResponseEntity<>(items, HttpStatus.OK);
+        ApiResponse apiResponse = new ApiResponse(true,"items list",items);
+        return new ResponseEntity<>(apiResponse.getBodyResponse(), HttpStatus.OK);
     }
 
     @GetMapping(path = "{item_id}", produces = "application/json")
     public ResponseEntity<Object> get_item(@PathVariable("item_id") long item_id){
         Item item = itemService.getitem(item_id);
-        return new ResponseEntity<>(item,HttpStatus.OK);
+        ApiResponse apiResponse = new ApiResponse(true,"item",item);
+        return new ResponseEntity<>(apiResponse.getBodyResponse(),HttpStatus.OK);
     }
 
     @PostMapping(path = "/create", produces = "application/json")
     public ResponseEntity<Object> createItem(@RequestBody Item item) throws Exception {
         Item savedItem = itemService.createItem(item);
-        return new ResponseEntity<>(savedItem, HttpStatus.CREATED);
+        ApiResponse apiResponse = new ApiResponse(true,"item saved",savedItem);
+        return new ResponseEntity<>(apiResponse.getBodyResponse(), HttpStatus.CREATED);
     }
 
     @PutMapping(path = "/update", produces = "application/json")
     public ResponseEntity<Object> updateItem(@RequestBody Item item) throws Exception {
         Item updatedItem = itemService.updateItem(item);
-        return new ResponseEntity<>(updatedItem, HttpStatus.OK);
+        ApiResponse apiResponse = new ApiResponse(true,"item updated",updatedItem);
+        return new ResponseEntity<>(apiResponse.getBodyResponse(), HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/delete/{item_id}", produces = "application/json")
     public ResponseEntity<Object> deleteItem(@PathVariable("item_id") long item_id) throws Exception {
         itemService.delete(item_id);
-        return new ResponseEntity<>(null, HttpStatus.OK);
+        ApiResponse apiResponse = new ApiResponse(true,"item deleted",null);
+        return new ResponseEntity<>(apiResponse.getBodyResponse(), HttpStatus.OK);
     }
 
 }
