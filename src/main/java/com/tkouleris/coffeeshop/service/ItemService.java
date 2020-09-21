@@ -21,10 +21,9 @@ public class ItemService {
         this.itemRepository = itemRepository;
     }
 
-    public List<Item> findAll(Integer pageNo, Integer pageSize, String sortBy) {
+    public Page<Item> findAll(Integer pageNo, Integer pageSize, String sortBy) {
         Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
-        Page<Item> pagedResult = itemRepository.findAll(paging);
-        return pagedResult.getContent();
+        return itemRepository.findAll(paging);
     }
 
     public Item createItem(Item item) throws Exception {

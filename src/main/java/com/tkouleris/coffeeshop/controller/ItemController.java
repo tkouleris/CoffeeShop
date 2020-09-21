@@ -4,6 +4,7 @@ import com.tkouleris.coffeeshop.dto.ApiResponse;
 import com.tkouleris.coffeeshop.model.Item;
 import com.tkouleris.coffeeshop.service.ItemService;
 import com.tkouleris.coffeeshop.utils.HttpUtils;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -27,9 +28,9 @@ public class ItemController {
                                       @RequestParam(defaultValue = "5") Integer pageSize,
                                       @RequestParam(defaultValue = "id") String sortBy,
                                       HttpServletRequest request) {
-        List<Item> items = itemService.findAll(pageNo, pageSize, sortBy);
+        Page<Item> items = itemService.findAll(pageNo, pageSize, sortBy);
         String baseUrl = HttpUtils.getBaseUrl(request);
-        itemService.setImagesUrl(items, baseUrl);
+        itemService.setImagesUrl(items.getContent(), baseUrl);
         ApiResponse apiResponse = new ApiResponse(true,"items list",items);
         return new ResponseEntity<>(apiResponse.getBodyResponse(), HttpStatus.OK);
     }
