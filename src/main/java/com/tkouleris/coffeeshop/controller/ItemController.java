@@ -32,6 +32,12 @@ public class ItemController {
         return new ResponseEntity<>(items, HttpStatus.OK);
     }
 
+    @GetMapping(path = "{item_id}", produces = "application/json")
+    public ResponseEntity<Object> get_item(@PathVariable("item_id") long item_id){
+        Item item = itemService.getitem(item_id);
+        return new ResponseEntity<>(item,HttpStatus.OK);
+    }
+
     @PostMapping(path = "/create", produces = "application/json")
     public ResponseEntity<Object> createItem(@RequestBody Item item) throws Exception {
         Item savedItem = itemService.createItem(item);
