@@ -1,5 +1,6 @@
 package com.tkouleris.coffeeshop.controller;
 
+import com.tkouleris.coffeeshop.dto.ApiResponse;
 import com.tkouleris.coffeeshop.exception.item.ItemNotFoundException;
 import com.tkouleris.coffeeshop.facade.FileUploader;
 import com.tkouleris.coffeeshop.model.Item;
@@ -29,7 +30,8 @@ public class FileUploadController {
     public ResponseEntity<Object> handleItemImageUpload(@RequestParam("file") MultipartFile file,
                                                         @RequestParam("item_id") long item_id) throws Exception {
         fileUploader.ItemImageUpload(file,item_id);
-        return new ResponseEntity<>("File uploaded", HttpStatus.OK);
+        ApiResponse apiResponse = new ApiResponse(true,"File uploaded",null);
+        return new ResponseEntity<>(apiResponse.getBodyResponse(), HttpStatus.OK);
     }
 
 }
