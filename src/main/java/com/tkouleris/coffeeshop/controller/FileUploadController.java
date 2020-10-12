@@ -1,11 +1,7 @@
 package com.tkouleris.coffeeshop.controller;
 
 import com.tkouleris.coffeeshop.dto.ApiResponse;
-import com.tkouleris.coffeeshop.exception.item.ItemNotFoundException;
 import com.tkouleris.coffeeshop.facade.FileUploader;
-import com.tkouleris.coffeeshop.model.Item;
-import com.tkouleris.coffeeshop.service.ItemService;
-import com.tkouleris.coffeeshop.service.UploadFileService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

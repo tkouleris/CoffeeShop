@@ -1,5 +1,6 @@
 package com.tkouleris.coffeeshop.controller;
 
+import com.tkouleris.coffeeshop.dto.ApiResponse;
 import com.tkouleris.coffeeshop.model.Tables;
 import com.tkouleris.coffeeshop.service.TableService;
 import org.springframework.http.HttpStatus;
@@ -25,19 +26,22 @@ public class TableController {
                                       @RequestParam(defaultValue = "5") Integer pageSize,
                                       @RequestParam(defaultValue = "id") String sortBy) {
         List<Tables> tables = tableService.findAll(pageNo, pageSize, sortBy);
-        return new ResponseEntity<>(tables, HttpStatus.OK);
+        ApiResponse apiResponse = new ApiResponse(true,"tables",tables);
+        return new ResponseEntity<>(apiResponse.getBodyResponse(), HttpStatus.OK);
     }
 
     @PostMapping(path = "/create", produces = "application/json")
     public ResponseEntity<Object> createTable(@RequestBody Tables table) throws Exception {
         Tables savedTable = tableService.createTable(table);
-        return new ResponseEntity<>(savedTable, HttpStatus.CREATED);
+        ApiResponse apiResponse = new ApiResponse(true,"table saved",savedTable);
+        return new ResponseEntity<>(apiResponse.getBodyResponse(), HttpStatus.CREATED);
     }
 
     @PutMapping(path = "/update", produces = "application/json")
     public ResponseEntity<Object> updateTable(@Valid @RequestBody Tables table) throws Exception {
         Tables updatedTable = tableService.updateTable(table);
-        return new ResponseEntity<>(updatedTable, HttpStatus.OK);
+        ApiResponse apiResponse = new ApiResponse(true,"table saved",updatedTable);
+        return new ResponseEntity<>(apiResponse.getBodyResponse(), HttpStatus.OK);
     }
 
     @DeleteMapping(path = "delete/{table_id}", produces = "application/json")
