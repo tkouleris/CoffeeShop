@@ -1,6 +1,7 @@
 package com.tkouleris.coffeeshop.controller;
 
 import com.tkouleris.coffeeshop.dto.ApiResponse;
+import com.tkouleris.coffeeshop.model.Item;
 import com.tkouleris.coffeeshop.model.Tables;
 import com.tkouleris.coffeeshop.service.TableService;
 import org.springframework.http.HttpStatus;
@@ -28,6 +29,13 @@ public class TableController {
         List<Tables> tables = tableService.findAll(pageNo, pageSize, sortBy);
         ApiResponse apiResponse = new ApiResponse(true,"tables",tables);
         return new ResponseEntity<>(apiResponse.getBodyResponse(), HttpStatus.OK);
+    }
+
+    @GetMapping(path = "{table_id}", produces = "application/json")
+    public ResponseEntity<Object> get_item(@PathVariable("table_id") long table_id){
+        Tables table = tableService.getTable(table_id);
+        ApiResponse apiResponse = new ApiResponse(true,"table",table);
+        return new ResponseEntity<>(apiResponse.getBodyResponse(),HttpStatus.OK);
     }
 
     @PostMapping(path = "/create", produces = "application/json")

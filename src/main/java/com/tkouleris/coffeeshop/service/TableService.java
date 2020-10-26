@@ -10,8 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Service
 public class TableService {
@@ -26,6 +24,10 @@ public class TableService {
         Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
         Page<Tables> pageResult = tablesRepository.findAll(paging);
         return pageResult.getContent();
+    }
+
+    public Tables getTable(long table_id) {
+        return tablesRepository.findById(table_id).orElse(null);
     }
 
     public Tables createTable(Tables table) throws Exception {
@@ -76,5 +78,4 @@ public class TableService {
         Tables updatedTable = tablesRepository.findByTableCode(table.getTable_code()).orElse(null);
         return Objects.requireNonNull(updatedTable).getId() != table.getId();
     }
-
 }
