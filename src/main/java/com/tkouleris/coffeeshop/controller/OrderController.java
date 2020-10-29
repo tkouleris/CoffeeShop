@@ -1,5 +1,6 @@
 package com.tkouleris.coffeeshop.controller;
 
+import com.tkouleris.coffeeshop.dto.ApiResponse;
 import com.tkouleris.coffeeshop.dto.converter.OrderRequestConverter;
 import com.tkouleris.coffeeshop.dto.requests.OrderRequest;
 import com.tkouleris.coffeeshop.dto.requests.OrdersRequest;
@@ -24,6 +25,14 @@ public class OrderController {
         this.orderService = orderService;
         this.orderRequestConverter = orderRequestConverter;
     }
+
+    @GetMapping(path = "/table_unpaid/{table_id}", produces = "application/json")
+    public ResponseEntity<Object> getTableUnpaid(@PathVariable("table_id") long table_id){
+        List<Orders> unpaidTableOrders = orderService.getUnpaidTableOrders(table_id);
+        ApiResponse apiResponse = new ApiResponse(true,"unpaid table orders",unpaidTableOrders);
+        return new ResponseEntity<>(apiResponse.getBodyResponse(),HttpStatus.OK);
+    }
+
 
     @PostMapping(path = "/create", produces = "application/json")
     public ResponseEntity<Object> create(@RequestBody OrdersRequest orders) {

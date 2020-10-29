@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OrderService {
@@ -47,5 +48,9 @@ public class OrderService {
             throw new Exception("Order does not exist");
         }
         ordersRepository.delete(orderToDelete);
+    }
+
+    public List<Orders> getUnpaidTableOrders(long table_id) {
+        return ordersRepository.findUnpaidByTableId(table_id);
     }
 }
