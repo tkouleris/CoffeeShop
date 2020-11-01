@@ -5,6 +5,7 @@ import com.tkouleris.coffeeshop.dto.converter.OrderRequestConverter;
 import com.tkouleris.coffeeshop.dto.requests.OrderRequest;
 import com.tkouleris.coffeeshop.dto.requests.OrdersRequest;
 import com.tkouleris.coffeeshop.dto.responses.OrderDefaultsResponse;
+import com.tkouleris.coffeeshop.exception.order.OrderNotFoundException;
 import com.tkouleris.coffeeshop.model.Orders;
 import com.tkouleris.coffeeshop.service.OrderService;
 import org.springframework.http.HttpStatus;
@@ -59,6 +60,18 @@ public class OrderController {
         }
         List<Orders> updateOrders = orderService.update(orderList);
         return new ResponseEntity<>(updateOrders, HttpStatus.OK);
+    }
+
+    @PutMapping(path = "/pay/{order_id}", produces = "application/json")
+    public ResponseEntity<Object> pay(@PathVariable("order_id") long order_id) throws OrderNotFoundException {
+        orderService.payOrder(order_id);
+        return new ResponseEntity<>(null, HttpStatus.OK);
+    }
+
+    @PutMapping(path = "/deliver/{order_id}", produces = "application/json")
+    public ResponseEntity<Object> deliver(@PathVariable("order_id") long order_id) throws OrderNotFoundException {
+        orderService.deliverOrder(order_id);
+        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/delete/{order_id}", produces = "application/json")

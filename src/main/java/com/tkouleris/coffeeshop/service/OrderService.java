@@ -1,6 +1,7 @@
 package com.tkouleris.coffeeshop.service;
 
 import com.tkouleris.coffeeshop.dto.responses.OrderDefaultsResponse;
+import com.tkouleris.coffeeshop.exception.order.OrderNotFoundException;
 import com.tkouleris.coffeeshop.model.Item;
 import com.tkouleris.coffeeshop.model.Orders;
 import com.tkouleris.coffeeshop.repository.ItemRepository;
@@ -34,6 +35,7 @@ public class OrderService {
     public List<Orders> update(List<Orders> orders) {
         List<Orders> updatedOrders = new ArrayList<>();
         for (Orders order : orders) {
+            System.out.println(order.isPayed());
             Orders entityToUpdate = ordersRepository.findById(order.getId()).orElse(null);
             if(entityToUpdate == null) continue;
             entityToUpdate.setItem(order.getItem());
@@ -44,6 +46,28 @@ public class OrderService {
             updatedOrders.add(updatedOrder);
         }
         return updatedOrders;
+    }
+
+    public boolean payOrder(long order_id) throws OrderNotFoundException {
+        Orders entityToUpdate = ordersRepository.findById(order_id).orElse(null);
+        if(entityToUpdate == null){
+            throw new OrderNotFoundException("Order not found");
+        }
+        entityToUpdate.setPayed(true);
+        ordersRepository.save(entityToUpdate);
+
+        return true;
+    }
+
+    public boolean deliverOrder(long order_id) throws OrderNotFoundException {
+        Orders entityToUpdate = ordersRepository.findById(order_id).orElse(null);
+        if(entityToUpdate == null){
+            throw new OrderNotFoundException("Order not found");
+        }
+        entityToUpdate.setDelivered(true);
+        ordersRepository.save(entityToUpdate);
+
+        return true;
     }
 
     public void delete(long order_id) throws Exception {
