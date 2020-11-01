@@ -4,6 +4,7 @@ import com.tkouleris.coffeeshop.dto.ApiResponse;
 import com.tkouleris.coffeeshop.dto.converter.OrderRequestConverter;
 import com.tkouleris.coffeeshop.dto.requests.OrderRequest;
 import com.tkouleris.coffeeshop.dto.requests.OrdersRequest;
+import com.tkouleris.coffeeshop.dto.responses.OrderDefaultsResponse;
 import com.tkouleris.coffeeshop.model.Orders;
 import com.tkouleris.coffeeshop.service.OrderService;
 import org.springframework.http.HttpStatus;
@@ -33,6 +34,12 @@ public class OrderController {
         return new ResponseEntity<>(apiResponse.getBodyResponse(),HttpStatus.OK);
     }
 
+    @GetMapping(path = "/load_default", produces = "application/json")
+    public ResponseEntity<Object> loadDefault(){
+        OrderDefaultsResponse orderDefaultsResponse = orderService.loadDefault();
+        ApiResponse apiResponse = new ApiResponse(true,"order default values",orderDefaultsResponse);
+        return new ResponseEntity<>(apiResponse.getBodyResponse(),HttpStatus.OK);
+    }
 
     @PostMapping(path = "/create", produces = "application/json")
     public ResponseEntity<Object> create(@RequestBody OrdersRequest orders) {
